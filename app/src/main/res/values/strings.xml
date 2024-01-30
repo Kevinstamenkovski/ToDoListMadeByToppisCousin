@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ToDoListMadeByToppisCousin</string>
+    <string name="completion_percentage">Completion: %d%%</string>
+</resources>
