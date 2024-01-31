@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<String> todoList;
@@ -54,13 +55,17 @@ public class MainActivity extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "A", Toast.LENGTH_SHORT).show();
-                int selectedItemPosition = listView.getCheckedItemPosition();
-                if (selectedItemPosition != -1) {
-                    todoList.remove(selectedItemPosition);
-                    todoAdapter.notifyDataSetChanged();
-                    updateCompletionPercentage();
+                // Use Iterator to safely remove completed todos
+                Iterator<TodoListAdapter> iterator = todoList.iterator();
+                while (iterator.hasNext()) {
+                    TodoListAdapter todo = iterator.next();
+                    if (todo.isCompleted()) {
+                        iterator.remove();
+                    }
                 }
+
+                todoAdapter.notifyDataSetChanged();
+                updateCompletionPercentage();
             }
         });
 
